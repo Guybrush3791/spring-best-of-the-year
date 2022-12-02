@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	
+	<link th:href="@{/css/style.css}" type="text/css" rel="stylesheet">
+	<script type="text/javascript" th:src="@{/js/script.js}" defer></script>
+	
+	 <!-- Bootstrap CSS -->
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}"/>
+</head>
+<body>
+	
+	<h1>Nome: [[${name}]]</h1>
+	<h1 th:text="'Nome: ' + ${name}"></h1>
+	<h1 th:text="|Nome ${name}|"></h1>
+	
+	<h1>[[${myObj}]]</h1>
+	<h1>[[${myObj.myMethod()}]]</h1>
+	<h1>[[${myObj.text}]]</h1>
+	<h1>[[${myObjs[1].text}]]</h1>
+	
+	<h1>[[#{text}]]</h1>
+	
+	<div th:object="${myObj}">
+		<h1>[[*{text}]]</h1>
+		<h1>[[*{myMethod()}]]</h1>
+	</div>
+	
+	<a th:href="@{/user/{id} (id=${myObjs[0].id})}">User [[${myObjs[0].id}]]</a>
+	<h1 th:unless="${myObj.id < 2}">Id >= 2</h1>
+	
+	<ul>
+		<li
+			th:each="myListObj : ${myObjs}"
+			th:object="${myListObj}"
+			
+		>
+			[[*{text}]]
+		</li>
+	</ul>
+	
+	<div th:with="text=${myObj.text},id=${myObj.id}">
+		<h1>[[${id}]]</h1>
+		<h1>[[${text}]]</h1>
+	</div>
+	
+	<div th:insert="frag :: btn('outside text')"></div>
+	
+</body>
+</html>
